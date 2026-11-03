@@ -13,7 +13,7 @@ description: 把一段竖屏单人口播视频套进“磨砂玻璃卡口播模�
 运行一次 `TPL/scripts/setup.sh`：把 Remotion 依赖装到共享文件夹（默认 `~/.local/share/video-kit`），并检查 ffmpeg 和字幕工具。已经装过会直接跳过。
 
 ## 做口播视频的固定步骤
-1. 建新项目：`TPL/scripts/new-video.sh <新项目文件夹>`。之后都在新项目里操作，不改 SKILL_DIR 里的任何文件。
+1. 建新项目：`TPL/scripts/new-video.sh <新项目文件夹>`。新项目文件夹默认放在 `~/Projects/videos/YYYY-MM-DD-名字/`，用户指定了位置就按用户的。之后都在新项目里操作，不改 SKILL_DIR 里的任何文件。
 2. 转视频：`scripts/prepare-video.sh <视频路径> [名字]`，生成 `public/<名字>.mp4`。
 3. 出字幕：`scripts/make-subtitles.sh public/<名字>.mp4 [文稿.txt]`，生成 `public/subtitles.srt`。有文稿一定带上。
    - 报“本机没有中文对齐模型”：告诉用户第一次要下载模型，用户同意后加 `--download` 再跑。

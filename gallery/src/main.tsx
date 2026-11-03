@@ -1,5 +1,6 @@
 // 模板预览页：用 Remotion 网页播放器实时播放，不渲染。
-// 两份示例共用同一套组件：tpl-intro（半导体引子，含图表、时间线、颜色），tpl-demo（模板自带的四种基础镜头）。
+// 玻璃卡模板：两份示例共用同一套组件，tpl-intro（半导体引子，含图表、时间线、颜色），tpl-demo（模板自带的四种基础镜头）。
+// 洞察卡模板：insight（模板自带的宁德时代示例）。宋的财经模板：FinanceDemo（五种特效）。
 import React, {useEffect, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Player} from '@remotion/player';
@@ -7,6 +8,9 @@ import * as Intro from './tpl-intro/video';
 import {content as introContent} from './tpl-intro/content';
 import * as Demo from './tpl-demo/video';
 import {content as demoContent} from './tpl-demo/content';
+import {InsightVideo, pageFrames, totalFrames as insightTotal} from './insight/Video';
+import {content as insightContent} from './insight/content';
+import {FINANCE_SCENE, FinanceDemo, financeEffects, financeTotal} from './FinanceDemo';
 
 // staticFile() 按这个前缀找文件；用相对当前页面的路径，放到任何二级目录都能用
 const base = new URL('media', location.href).pathname.replace(/\/$/, '');
@@ -47,6 +51,23 @@ const sfx: [string, string][] = [
 ];
 
 const size = {compositionWidth: 1080, compositionHeight: 1920, fps: 30} as const;
+const insightSize = {compositionWidth: 1080, compositionHeight: 1440, fps: 30} as const;
+
+const insightPages: Record<string, [string, string]> = {
+	cover: ['封面', '标题、钩子、引导'],
+	hero: ['主角数字', '3 个小指标铺垫 → 主角数字砸出来、盖章、公式拆解 → 一条反差结论'],
+	causes: ['两个原因', '原因 1 聚焦 → 原因 2 聚焦 → 两个都亮，其余原因压成小格'],
+	points: ['结论', '结论或验证锚点，最多 3 条'],
+};
+let at = 0;
+const insightRanges = insightContent.pages.map(pg => {const r = {type: pg.type, from: at, frames: pageFrames(pg)}; at += r.frames; return r;});
+const playerStyle = {width: '100%', borderRadius: 14, overflow: 'hidden'} as const;
+
+// 封面都停在这一段内容出齐、还没淡出的那一帧
+const Segment = ({component, total, from, frames, sz}: {component: React.FC; total: number; from: number; frames: number; sz: typeof size | typeof insightSize}) =>
+	<Player component={component} durationInFrames={total} {...sz}
+		inFrame={from} outFrame={from + frames - 1} initialFrame={from + frames - 20}
+		controls loop clickToPlay style={playerStyle}/>;
 
 function Clip({r, i, type}: {r: Ready; i: number; type: string}) {
 	const s = r.props.timeline[i];
@@ -68,6 +89,14 @@ function App() {
 	if (!ready) return <p className="note">加载中…</p>;
 	const play = (n: string) => new Audio(`${base}/sfx/${n}.wav`).play();
 	return <>
+		<nav className="toc">
+			<a href="#glass"><b>磨砂玻璃卡口播</b><small>竖屏真人口播，7 种镜头</small></a>
+			<a href="#insight"><b>洞察卡视频</b><small>HTML 图文卡 → 3:4 动画</small></a>
+			<a href="#finance"><b>宋的财经特效</b><small>叠在已有口播上的 5 种特效</small></a>
+		</nav>
+
+		<h2 className="section" id="glass">磨砂玻璃卡口播模板</h2>
+		<p className="dim">技能名 <code>glass-talking-video</code>。竖屏单人口播：真人 + 磨砂玻璃卡，数据和过程切到深色画布。</p>
 		<section className="hero">
 			<div className="hero-player">
 				<Player component={ready.intro.kit.Demo} inputProps={ready.intro.props} durationInFrames={ready.intro.total} {...size}
@@ -82,7 +111,7 @@ function App() {
 			</div>
 		</section>
 
-		<h2 className="section">7 种镜头</h2>
+		<h3 className="sub">7 种镜头</h3>
 		<p className="dim">每个播放器只播这一种镜头，可以拖动进度条。用的人只需要往这些字段里填内容，样式和动效都是固定的。</p>
 		<div className="grid">{cards.map(c => <article key={c.type} className="card">
 			<Clip r={c.from === 'intro' ? ready.intro : ready.demo} i={c.i} type={c.type}/>
@@ -91,9 +120,39 @@ function App() {
 			<p className="fields">{c.fields}</p>
 		</article>)}</div>
 
-		<h2 className="section" id="sfx">音效</h2>
+		<h3 className="sub" id="sfx">音效</h3>
 		<p className="dim">22 个音效，都是用代码合成的，没有版权问题。点一下试听。</p>
 		<div className="sfx">{sfx.map(([n, u]) => <button key={n} onClick={() => play(n)}><span>▶</span><code>{n}</code><small>{u}</small></button>)}</div>
+
+		<h2 className="section" id="insight">洞察卡视频模板</h2>
+		<p className="dim">技能名 <code>song-insight-card-video</code>。把一张小红书 3:4 财经分析卡做成动画：一个主角数字 + 两个最直接的原因，其余压缩。新视频只改 <code>content.ts</code>。</p>
+		<section className="hero">
+			<div className="hero-player">
+				<Player component={InsightVideo} durationInFrames={insightTotal} {...insightSize} initialFrame={60}
+					controls clickToPlay style={{...playerStyle, borderRadius: 18}}/>
+			</div>
+			<div className="hero-text">
+				<p className="kicker">完整示例 · 宁德时代 Q3 现金流 · 约 {Math.round(insightTotal / 30)} 秒</p>
+				<h2>一个主角数字，两个原因</h2>
+				<p>固定四页：封面 → 主角数字 → 两个原因 → 结论。页码和总时长按内容自动算，内容少可以去掉封面或结论。</p>
+				<p className="dim">网页里没放背景音乐；实际视频可以在 <code>content.ts</code> 里配 <code>bgm</code>。</p>
+			</div>
+		</section>
+		<h3 className="sub">4 种页面</h3>
+		<div className="grid">{insightRanges.map(r => <article key={r.type} className="card">
+			<Segment component={InsightVideo} total={insightTotal} from={r.from} frames={r.frames} sz={insightSize}/>
+			<h3><code>{r.type}</code> {insightPages[r.type]?.[0]}</h3>
+			<p>{insightPages[r.type]?.[1]}</p>
+		</article>)}</div>
+
+		<h2 className="section" id="finance">宋的财经模板</h2>
+		<p className="dim">技能名 <code>song-finance-video-template</code>。不是一整条视频，而是 5 种固定特效，放进 <code>Sequence</code> 叠在已有的口播视频上，只改文字、数字、图片和出现时间。下面用的是默认示例文案和占位截图。</p>
+		<div className="grid">{financeEffects.map((e, i) => <article key={e.name} className="card">
+			<Segment component={FinanceDemo} total={financeTotal} from={i * FINANCE_SCENE} frames={FINANCE_SCENE} sz={size}/>
+			<h3><code>{e.name}</code> {e.title}</h3>
+			<p>{e.use}</p>
+			<p className="fields">{e.fields}</p>
+		</article>)}</div>
 	</>;
 }
 

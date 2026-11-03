@@ -14,6 +14,6 @@
 2. 新项目建在用户指定的文件夹，不在这个仓库里做视频，也不改这个仓库的文件。
 3. 不渲染，用户自己渲染。
 
-修改模板本身（组件、预览页）是另一件事：改对应模板 `template/` 里的代码；改了玻璃卡模板后，运行 `gallery/build.sh` 重新生成 `docs/` 预览页。
+修改模板本身（组件、预览页）是另一件事：改对应模板 `template/` 里的代码；改了任何一个模板后，都运行 `gallery/build.sh` 重新生成 `docs/` 预览页（三个模板都在这一页上）。
 
 所有模板共用一份依赖：`~/.local/share/video-kit/node_modules`，由 `glass-talking-video/template/scripts/setup.sh` 安装，依赖清单就是玻璃卡模板的 `package.json`。

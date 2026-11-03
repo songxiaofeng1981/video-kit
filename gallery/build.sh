@@ -9,15 +9,23 @@ home=${VIDEO_KIT_HOME:-$HOME/.local/share/video-kit}
 [[ -d $home/node_modules/@remotion/player ]] || { echo "先运行：$skill/template/scripts/setup.sh"; exit 1; }
 cd $here
 ln -sfn $home/node_modules node_modules
-# 两份示例共用同一套组件：tpl-demo 是模板自带的内容，tpl-intro 换成半导体引子的内容
+# 玻璃卡模板：两份示例共用同一套组件：tpl-demo 是模板自带的内容，tpl-intro 换成半导体引子的内容
 rm -rf src/tpl-demo src/tpl-intro && mkdir -p src/tpl-demo src/tpl-intro
 cp $skill/template/src/video.tsx $skill/template/src/content.ts src/tpl-demo/
 cp $skill/template/src/video.tsx src/tpl-intro/
 cp $skill/examples/semiconductor-intro.ts src/tpl-intro/content.ts
+# 洞察卡模板：整份 src 照搬（自带的宁德时代示例），去掉 bgm，网页里不放音乐
+insight=$root/plugins/video-kit/skills/song-insight-card-video
+rm -rf src/insight && cp -R $insight/template/src src/insight && rm src/insight/index.ts src/insight/Root.tsx
+sed -i '' '/^  bgm: /d' src/insight/content.ts
+# 宋的财经模板：只取特效母版，演示合成在 src/FinanceDemo.tsx
+finance=$root/plugins/video-kit/skills/song-finance-video-template
+rm -rf src/finance && mkdir -p src/finance && cp $finance/assets/remotion/SongFinanceEffects.jsx src/finance/
 
 docs=$root/docs
 rm -rf $docs && mkdir -p $docs/media/sfx && touch $docs/.nojekyll
 cp $skill/template/public/own-demo.mp4 $docs/media/
+cp news-placeholder.svg $docs/media/
 cp $skill/examples/semiconductor-intro.srt $docs/media/subtitles.srt
 cp $root/plugins/video-kit/sfx/*.wav $docs/media/sfx/
 cp index.html guide.html $docs/

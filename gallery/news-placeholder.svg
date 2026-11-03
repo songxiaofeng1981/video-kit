@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+  <!-- 预览页用的占位“新闻截图”，实际视频换成真实截图 -->
+  <rect width="1080" height="1350" fill="#f4f1ea"/>
+  <rect x="60" y="60" width="960" height="90" fill="#1d2430"/>
+  <text x="90" y="122" font-family="PingFang SC, sans-serif" font-size="44" font-weight="700" fill="#fff">示例财经日报 · 占位截图</text>
+  <text x="60" y="240" font-family="PingFang SC, sans-serif" font-size="64" font-weight="800" fill="#1d2430">这里放真实的新闻截图</text>
+  <text x="60" y="320" font-family="PingFang SC, sans-serif" font-size="36" fill="#5a6270">预览页没有附带真实新闻，只演示动效</text>
+  <g fill="#c9c3b6">
+    <rect x="60" y="400" width="960" height="22" rx="4"/><rect x="60" y="450" width="900" height="22" rx="4"/>
+    <rect x="60" y="500" width="940" height="22" rx="4"/><rect x="60" y="550" width="620" height="22" rx="4"/>
+    <rect x="60" y="640" width="960" height="380" rx="12"/>
+    <rect x="60" y="1070" width="960" height="22" rx="4"/><rect x="60" y="1120" width="880" height="22" rx="4"/>
+    <rect x="60" y="1170" width="700" height="22" rx="4"/>
+  </g>
+</svg>

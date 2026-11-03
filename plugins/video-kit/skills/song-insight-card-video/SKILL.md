@@ -17,7 +17,7 @@ description: 把一张 HTML 图文卡片（小红书 3:4 财经分析卡等）�
    - 判断为「不适合」时停下，把原因和替代做法告诉用户，不要硬做。
    - 把主角数字、两个原因、被压缩/舍弃的内容、配色告诉用户。用户已确认过主角和原因就直接继续，否则等确认。
 1. **定内容**：以 video-slots 为准；用户另外指定的照用户。
-2. **建项目**：`<技能目录>/scripts/new-video.sh <目标目录>`。目标目录默认放在 HTML 同级，命名 `<主题>_video`。它会复制模板并链接共享依赖，不要 `npm install`。
+2. **建项目**：`<技能目录>/scripts/new-video.sh <目标目录>`。目标目录默认放在 `~/Projects/videos/YYYY-MM-DD-<主题>/`，用户指定了位置就按用户的。它会复制模板并链接共享依赖，不要 `npm install`。
 3. **只改 `src/content.ts`**：把 video-slots 的 JSON 照抄成 `export const content: VideoContent = {...}`，结构看 `src/types.ts`。文案里 `**重点**` 变主强调色加粗，`\n` 换行。
    - `theme` 照抄源 HTML 的颜色（page / card / ink / accent / accent2，可选 accentDark），其余色阶自动推导。不写就是默认紫/橙。
    - 不读、不改 `pages.tsx` 等组件，省 token。用户要新样式时才改组件，并说明这会影响模板；问用户是否回写到 `template/`。

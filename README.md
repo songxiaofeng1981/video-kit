@@ -1,8 +1,8 @@
 # video-kit · 磨砂玻璃卡口播模板
 
-**在线预览：https://songxiaofeng1981.github.io/video-kit/** 打开就能看，不用安装，也没有渲染。
+**在线预览：https://songxiaofeng1981.github.io/video-kit/** 三个模板都能直接看，不用安装，也没有渲染。
 
-**使用说明：https://songxiaofeng1981.github.io/video-kit/guide.html** 安装、写稿、录制、交给 Claude Code / Codex / Gemini 的完整步骤。
+**玻璃卡模板使用说明：https://songxiaofeng1981.github.io/video-kit/guide.html** 安装、写稿、录制、交给 Claude Code / Codex / Gemini 的完整步骤。
 
 竖屏单人口播模板（Remotion）：真人 + 磨砂玻璃重点卡；讲数据、过程时切到深色画布（柱状图、时间线、流程图），人缩到右下角；逐句字幕按真实说话时间对齐。
 
