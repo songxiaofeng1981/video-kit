@@ -14,6 +14,7 @@ rm -rf src/tpl-demo src/tpl-intro && mkdir -p src/tpl-demo src/tpl-intro
 cp $skill/template/src/video.tsx $skill/template/src/content.ts src/tpl-demo/
 cp $skill/template/src/video.tsx src/tpl-intro/
 cp $skill/examples/semiconductor-intro.ts src/tpl-intro/content.ts
+cp $skill/examples/semiconductor-intro.srt src/tpl-intro/subtitles.srt
 # 洞察卡模板：整份 src 照搬（自带的宁德时代示例），去掉 bgm，网页里不放音乐
 insight=$root/plugins/video-kit/skills/song-insight-card-video
 rm -rf src/insight && cp -R $insight/template/src src/insight && rm src/insight/index.ts src/insight/Root.tsx
@@ -26,10 +27,9 @@ docs=$root/docs
 rm -rf $docs && mkdir -p $docs/media/sfx && touch $docs/.nojekyll
 cp $skill/template/public/own-demo.mp4 $docs/media/
 cp news-placeholder.svg $docs/media/
-cp $skill/examples/semiconductor-intro.srt $docs/media/subtitles.srt
 cp $root/plugins/video-kit/sfx/*.wav $docs/media/sfx/
 cp index.html guide.html $docs/
-node_modules/.bin/esbuild src/main.tsx --bundle --minify --jsx=automatic --outfile=$docs/app.js \
+node_modules/.bin/esbuild src/main.tsx --bundle --minify --jsx=automatic --outfile=$docs/app.js --loader:.srt=text \
 	--define:process.env.NODE_ENV='"production"' --log-level=warning
 du -sh $docs
 if [[ ${1:-} == serve ]]; then

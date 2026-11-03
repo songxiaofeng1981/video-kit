@@ -8,6 +8,8 @@ import * as Intro from './tpl-intro/video';
 import {content as introContent} from './tpl-intro/content';
 import * as Demo from './tpl-demo/video';
 import {content as demoContent} from './tpl-demo/content';
+// 字幕打包进 app.js，不用 fetch：直接双击打开 index.html（file://）也能播
+import introSrt from './tpl-intro/subtitles.srt';
 import {InsightVideo, pageFrames, totalFrames as insightTotal} from './insight/Video';
 import {content as insightContent} from './insight/content';
 import {FINANCE_SCENE, FinanceDemo, financeEffects, financeTotal} from './FinanceDemo';
@@ -25,7 +27,7 @@ async function load(kit: Kit, content: typeof introContent): Promise<Ready> {
 	await new Promise((ok, fail) => {v.onloadedmetadata = ok; v.onerror = fail;});
 	const videoFrames = Math.max(1, Math.floor(v.duration * kit.FPS));
 	const timeline = kit.buildTimeline(videoFrames);
-	const subs = content.subtitles ? kit.parseSrt(await (await fetch(`${base}/${content.subtitles}`)).text()) : [];
+	const subs = content.subtitles ? kit.parseSrt(introSrt) : [];
 	const last = timeline[timeline.length - 1];
 	return {kit, props: {videoFrames, timeline, subs}, total: last.from + last.frames};
 }
