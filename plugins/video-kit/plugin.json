@@ -1,0 +1,27 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "video-kit",
+  "version": "2.1.0",
+  "description": "把竖屏口播视频套进磨砂玻璃卡模板：真人 + 玻璃卡，数据和过程切到深色画布，逐句字幕。只填内容，不改组件，不渲染。",
+  "author": {"name": "songxiaofeng1981", "url": "https://github.com/songxiaofeng1981"},
+  "homepage": "https://songxiaofeng1981.github.io/video-kit/",
+  "repository": "https://github.com/songxiaofeng1981/video-kit",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": ["remotion", "video", "talking-head", "口播", "glassmorphism"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "video-kit",
+        "shortDescription": "磨砂玻璃卡口播模板：只填内容，不改组件",
+        "longDescription": "把一段竖屏单人口播视频套进固定的磨砂玻璃卡模板：转视频、按文稿对齐逐句字幕、把字幕填进 content.ts，最后开 Remotion Studio 预览。不渲染。",
+        "developerName": "songxiaofeng1981",
+        "category": "Design",
+        "capabilities": ["Read", "Write"],
+        "websiteURL": "https://songxiaofeng1981.github.io/video-kit/",
+        "defaultPrompt": [
+          "用磨砂玻璃卡模板做一个口播视频，视频是 ~/Movies/IMG_1234.MOV，文稿是 ~/文稿.txt"
+        ]
+      }
+    }
+  }
+}

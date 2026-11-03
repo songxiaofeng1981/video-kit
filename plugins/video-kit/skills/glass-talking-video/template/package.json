@@ -1,0 +1,14 @@
+{
+  "name": "glass-talking-video",
+  "version": "2.1.0",
+  "private": true,
+  "scripts": {"studio": "remotion studio src/index.tsx --no-open"},
+  "dependencies": {
+    "@remotion/cli": "4.0.526",
+    "@remotion/media-utils": "4.0.526",
+    "@remotion/player": "4.0.526",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "remotion": "4.0.526"
+  }
+}
