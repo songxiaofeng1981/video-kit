@@ -20,7 +20,7 @@ rm -rf $docs && mkdir -p $docs/media/sfx && touch $docs/.nojekyll
 cp $skill/template/public/own-demo.mp4 $docs/media/
 cp $skill/examples/semiconductor-intro.srt $docs/media/subtitles.srt
 cp $root/plugins/video-kit/sfx/*.wav $docs/media/sfx/
-cp index.html $docs/
+cp index.html guide.html $docs/
 node_modules/.bin/esbuild src/main.tsx --bundle --minify --jsx=automatic --outfile=$docs/app.js \
 	--define:process.env.NODE_ENV='"production"' --log-level=warning
 du -sh $docs

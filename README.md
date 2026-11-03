@@ -2,6 +2,8 @@
 
 **在线预览：https://songxiaofeng1981.github.io/video-kit/** 打开就能看，不用安装，也没有渲染。
 
+**使用说明：https://songxiaofeng1981.github.io/video-kit/guide.html** 安装、写稿、录制、交给 Claude Code / Codex / Gemini 的完整步骤。
+
 竖屏单人口播模板（Remotion）：真人 + 磨砂玻璃重点卡；讲数据、过程时切到深色画布（柱状图、时间线、流程图），人缩到右下角；逐句字幕按真实说话时间对齐。
 
 - **固定组件，只填内容**：7 种镜头的样式和动效都已锁定，AI 只往 `content.ts` 里填文字和数字。填错了，预览里直接用中文报出哪里不对。

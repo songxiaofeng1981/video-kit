@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>玻璃卡模板说明</title>
+<style>
+:root{
+  --bg:#f6f5f2; --panel:#ffffff; --ink:#1d1d1f; --muted:#6b6b70; --line:#e3e1dc;
+  --accent:#a8741a; --accent-soft:#f6ead2; --code-bg:#f1efea; --ok:#2f7d4f; --ok-soft:#e3f2e8; --warn:#9a3b2e; --warn-soft:#f8e4e0;
+  --claude:#c96442; --codex:#3a6ea5; --gemini:#7b5bc4; --frame:#2a2a2e; --zone-card:rgba(240,200,130,.55); --zone-cap:rgba(255,255,255,.45); --zone-face:rgba(111,207,151,.45);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121316; --panel:#1b1d21; --ink:#ececee; --muted:#9a9aa2; --line:#2c2f35;
+    --accent:#f0c072; --accent-soft:#3a2f1c; --code-bg:#22252a; --ok:#6fcf97; --ok-soft:#1c3226; --warn:#f0998a; --warn-soft:#3a221e;
+    --claude:#e08a6a; --codex:#7fa8d8; --gemini:#b39af0; --frame:#0b0c0e;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121316; --panel:#1b1d21; --ink:#ececee; --muted:#9a9aa2; --line:#2c2f35;
+  --accent:#f0c072; --accent-soft:#3a2f1c; --code-bg:#22252a; --ok:#6fcf97; --ok-soft:#1c3226; --warn:#f0998a; --warn-soft:#3a221e;
+  --claude:#e08a6a; --codex:#7fa8d8; --gemini:#b39af0; --frame:#0b0c0e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+a{color:var(--accent)}
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:40px;max-width:1180px;margin:0 auto;padding:32px 24px 80px}
+nav.toc{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow:auto;font-size:14px}
+nav.toc h2{font-size:12px;letter-spacing:.12em;color:var(--muted);margin:0 0 10px}
+nav.toc ol{list-style:none;margin:0;padding:0}
+nav.toc li{margin:2px 0}
+nav.toc a{display:block;padding:5px 10px;border-radius:8px;color:var(--ink);text-decoration:none}
+nav.toc a:hover{background:var(--panel)}
+nav.toc ol ol{padding-left:12px;border-left:1px solid var(--line);margin:2px 0 6px 12px}
+nav.toc ol ol a{color:var(--muted);padding:3px 10px}
+nav.toc .group{font-size:12px;color:var(--muted);margin:14px 10px 4px;letter-spacing:.06em}
+main{min-width:0}
+header.hero{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px 30px;margin-bottom:28px}
+header.hero h1{margin:0 0 6px;font-size:30px;line-height:1.3}
+header.hero p{margin:0;color:var(--muted)}
+.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 16px;margin-top:20px;font-size:14px}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0;min-width:0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+section{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px 30px;margin-bottom:22px}
+section h2{margin:0 0 14px;font-size:22px}
+section h3{margin:26px 0 8px;font-size:17px}
+section h3:first-of-type{margin-top:8px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--code-bg);padding:1px 6px;border-radius:5px;overflow-wrap:anywhere}
+pre{position:relative;background:var(--code-bg);border-radius:12px;padding:16px 78px 16px 18px;overflow:auto;font:13.5px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;margin:10px 0 16px;white-space:pre-wrap;word-break:break-word}
+pre code{background:none;padding:0;font-size:inherit}
+button.copy{font:12px/1 inherit;font-family:inherit;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:6px 10px;border-radius:8px;cursor:pointer}
+pre button.copy{position:absolute;top:10px;right:10px}
+button.copy:hover{border-color:var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin:8px 0 14px}
+th,td{text-align:left;vertical-align:top;padding:9px 10px;border-bottom:1px solid var(--line)}
+th{font-size:13px;color:var(--muted);font-weight:600}
+.table-wrap{overflow-x:auto}
+.tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent);font-weight:600;white-space:nowrap}
+.tag.ok{background:var(--ok-soft);color:var(--ok)}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+.steps{counter-reset:s;list-style:none;padding:0;margin:8px 0}
+.steps li{counter-increment:s;position:relative;padding:4px 0 10px 42px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:4px;width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;display:grid;place-items:center;font-size:14px}
+.note{border-left:3px solid var(--accent);background:var(--accent-soft);padding:10px 14px;border-radius:0 10px 10px 0;margin:12px 0;font-size:15px}
+.note.warn{border-color:var(--warn);background:var(--warn-soft)}
+.model{border-top:5px solid var(--m)}
+.model .badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--m);margin-bottom:4px}
+.mtoc{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:4px 0 18px;font-size:14px}
+.mtoc b{font-size:12px;color:var(--muted);letter-spacing:.08em}
+.mtoc ol{margin:6px 0 0;padding-left:20px;columns:2;column-gap:28px}
+.mtoc a{color:var(--m)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card h4{margin:0 0 6px;font-size:15px}
+.card p,.card ul{margin:0;font-size:14.5px}
+.card ul{padding-left:18px}
+.frame-wrap{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;align-items:start}
+.frame{position:relative;width:200px;aspect-ratio:9/16;background:var(--frame);border-radius:14px;overflow:hidden;color:#fff;font-size:11px}
+.frame div{position:absolute;left:0;right:0;display:grid;place-items:center;text-align:center}
+.z-label{top:6%;left:4%!important;right:auto!important;width:36%;height:4%;border:1px dashed rgba(255,255,255,.6);border-radius:4px}
+.z-face{top:10%;height:50%;left:18%!important;right:18%!important;background:var(--zone-face);border-radius:40% 40% 20% 20%}
+.z-card{top:66%;height:19%;left:6%!important;right:6%!important;background:var(--zone-card);border-radius:10px;color:#2a1d05}
+.z-cap{top:88%;height:5%;background:var(--zone-cap);color:#111}
+.legend{margin:0;padding-left:18px;font-size:14.5px}
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr;gap:18px;padding:16px 16px 60px}
+  nav.toc{position:static;max-height:none;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+  section,header.hero{padding:20px 18px}
+  .grid2,.frame-wrap{grid-template-columns:1fr}
+  .mtoc ol{columns:1}
+  header.hero h1{font-size:24px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc" aria-label="目录">
+  <h2>目录</h2>
+  <ol>
+    <li class="group">先了解</li>
+    <li><a href="#fit">1. 这个模板适合什么</a></li>
+    <li><a href="#overview">2. 整体流程</a></li>
+    <li class="group">准备</li>
+    <li><a href="#install">3. 安装（只需一次）</a></li>
+    <li><a href="#script">4. 怎么写稿</a></li>
+    <li><a href="#record">5. 怎么录</a></li>
+    <li><a href="#prepare">6. 交给 AI 前准备什么</a></li>
+    <li class="group">交给 AI</li>
+    <li><a href="#task">7. 通用任务单</a></li>
+    <li><a href="#claude">8. Claude Code</a>
+      <ol><li><a href="#claude-model">选模型</a></li><li><a href="#claude-open">打开方式</a></li><li><a href="#claude-prompt">提示词</a></li><li><a href="#claude-check">验收</a></li><li><a href="#claude-save">省 token</a></li></ol></li>
+    <li><a href="#codex">9. Codex</a>
+      <ol><li><a href="#codex-model">选模型</a></li><li><a href="#codex-open">打开方式</a></li><li><a href="#codex-prompt">提示词</a></li><li><a href="#codex-check">验收</a></li><li><a href="#codex-save">省 token</a></li></ol></li>
+    <li><a href="#gemini">10. Gemini CLI 等其他工具</a>
+      <ol><li><a href="#gemini-model">选模型</a></li><li><a href="#gemini-open">打开方式</a></li><li><a href="#gemini-prompt">提示词</a></li><li><a href="#gemini-check">验收</a></li><li><a href="#gemini-save">省 token</a></li></ol></li>
+    <li class="group">参考</li>
+    <li><a href="#scenes">11. 七种镜头与颜色</a></li>
+    <li><a href="#files">12. 模板文件</a></li>
+    <li><a href="#render">13. 自己渲染</a></li>
+    <li><a href="#faq">14. 常见问题</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="hero">
+  <h1>磨砂玻璃卡口播模板 · 使用说明</h1>
+  <p>竖屏单人口播的包装模板：真人画面加磨砂重点卡；讲数据、过程时切到深色画布（柱状图、时间线、流程图），人缩到右下角圆形头像；字幕跟着说话逐句出现。样式固定，内容跟着你的稿走。</p>
+  <dl class="facts">
+    <dt>先看效果</dt>
+    <dd><a href="./">在线预览：完整示例 + 7 种镜头 + 音效试听</a></dd>
+    <dt>安装</dt>
+    <dd>Claude Code、Codex 装插件，其他工具下载仓库，见<a href="#install">第 3 节</a></dd>
+    <dt>你要准备</dt>
+    <dd>按第 5 节录好的竖屏视频 + 按第 4 节写的文稿（txt）</dd>
+    <dt>AI 只读</dt>
+    <dd><code>SKILL.md</code>（步骤）和 <code>TEMPLATE.md</code>（一页套稿规则），只改 <code>src/content.ts</code></dd>
+    <dt>本机预览</dt>
+    <dd><code>http://localhost:3000/V2-Glass-and-Canvas</code><span class="tag">端口被占用时自动换 3001、3002…</span></dd>
+    <dt>源码</dt>
+    <dd><a href="https://github.com/songxiaofeng1981/video-kit">github.com/songxiaofeng1981/video-kit</a></dd>
+  </dl>
+</header>
+
+<section id="fit">
+  <h2>1. 这个模板适合什么</h2>
+  <div class="grid2">
+    <div class="card"><h4><span class="tag ok">适合</span></h4>
+      <ul><li>知识讲解、方法分享、经验总结、观点类口播</li><li>工具或做法的对比：A 和 B、以前和现在</li><li>流程改进：旧办法绕一圈，新办法走捷径</li><li>少量数字对比：几个基金、公司、年份的数字（2–4 个）</li><li>讲时间先后：某年发生 A → 于是 B → 又带来 C</li><li>单人对镜头，坐着或站着，30 秒到 5 分钟</li></ul></div>
+    <div class="card"><h4><span class="tag warn">不适合</span></h4>
+      <ul><li>整期都是数字、图表的数据报告</li><li>屏幕操作演示、软件教程</li><li>多人对话、采访</li><li>边走边拍的 vlog、横屏视频</li><li>需要大画面展示产品外观</li></ul></div>
+  </div>
+  <p>一句话判断：<b>你是不是一个人对着镜头，把一件事分几段讲清楚？</b>是，就用这个模板。</p>
+  <div class="note">画面原则：<b>只在观众会卡住的地方加东西</b>（专有名词、数字、前后对比）。观众听了不会卡住的句子，什么都不加。每个画面都可以问一句：去掉它，观众会少懂什么？说不出来就去掉。</div>
+</section>
+
+<section id="overview">
+  <h2>2. 整体流程</h2>
+  <ol class="steps">
+    <li><b>安装</b>（第一次）：按第 3 节装插件。</li>
+    <li><b>写稿</b>（你）：按第 4 节的结构写，存成 txt。</li>
+    <li><b>录视频</b>（你）：按第 5 节的机位和讲法录。</li>
+    <li><b>交给 AI</b>：发第 7 节的任务单。AI 会建新项目、转视频、按文稿出逐句字幕、读模板卡、填 <code>content.ts</code>、打开预览。</li>
+    <li><b>看预览</b>（你）：不满意就直接告诉 AI 改哪段，或者自己改 <code>content.ts</code> 里的文字。</li>
+    <li><b>渲染</b>（你）：第 13 节。AI 不渲染。</li>
+  </ol>
+  <div class="note">字幕的时间来自<b>录好的视频里你实际说话的时间</b>，不是稿子上估的时间。所以先录，再让 AI 套模板。</div>
+</section>
+
+<section id="install">
+  <h2>3. 安装（只需一次）</h2>
+  <h3>Claude Code</h3>
+<pre id="inst-claude"><button class="copy" data-copy="#inst-claude">复制</button><code>claude plugin marketplace add songxiaofeng1981/video-kit
+claude plugin install video-kit@video-kit</code></pre>
+  <h3>Codex</h3>
+<pre id="inst-codex"><button class="copy" data-copy="#inst-codex">复制</button><code>codex plugin marketplace add songxiaofeng1981/video-kit
+codex plugin add video-kit@video-kit</code></pre>
+  <h3>Gemini CLI、Antigravity 等其他工具</h3>
+  <p>把仓库下载到本机，以后在这个文件夹里打开工具，它会读 <code>AGENTS.md</code>。</p>
+<pre id="inst-git"><button class="copy" data-copy="#inst-git">复制</button><code>git clone https://github.com/songxiaofeng1981/video-kit.git ~/Projects/video-kit</code></pre>
+  <h3>电脑上要有</h3>
+  <div class="table-wrap"><table>
+    <tr><th>工具</th><th>用来</th><th>怎么装</th><th></th></tr>
+    <tr><td>Node.js 18+</td><td>运行 Remotion 预览</td><td><code>brew install node</code> 或 nodejs.org</td><td><span class="tag warn">必需</span></td></tr>
+    <tr><td>ffmpeg</td><td>转视频</td><td><code>brew install ffmpeg</code></td><td><span class="tag warn">必需</span></td></tr>
+    <tr><td>WhisperX</td><td>按真实说话时间自动对齐字幕</td><td><code>uv tool install whisperx</code></td><td><span class="tag">可选</span></td></tr>
+  </table></div>
+  <p>第一次做视频时，AI 会先运行 <code>setup.sh</code>：把 Remotion 依赖装到 <code>~/.local/share/video-kit</code>（约半分钟），所有视频项目共用这一份，再检查 ffmpeg 和 WhisperX。</p>
+  <div class="note">没装 WhisperX 也能用：自己准备一份 SRT 字幕交给 AI。装了的话，第一次出字幕要下载中文对齐模型，AI 会先问你，同意后它加 <code>--download</code> 再跑。</div>
+  <h3>更新到新版本</h3>
+  <ul>
+    <li>Claude Code：<code>claude plugin marketplace update video-kit</code>，再 <code>claude plugin update video-kit@video-kit</code>，重开 Claude Code 生效。也可以在 <code>/plugin</code> 里打开自动更新。</li>
+    <li>Codex：<code>codex plugin marketplace upgrade</code>，然后重开 Codex。</li>
+    <li>下载仓库的：在仓库文件夹里 <code>git pull</code>。</li>
+  </ul>
+</section>
+
+<section id="script">
+  <h2>4. 怎么写稿</h2>
+  <p>稿子按“段”写，每段讲一件事。每段前面加一个标签，AI 就知道这段用哪种镜头。标签不会被念出来，也不会出现在字幕里。</p>
+  <div class="table-wrap"><table>
+    <tr><th>标签</th><th>画面</th><th>怎么写</th><th>至少讲多久</th></tr>
+    <tr><td><code>【开场·观点】</code></td><td>真人 + 重点卡</td><td>第一句直接说结论或亮点。关键词要明确说出来，会标成强调色</td><td>2 秒</td></tr>
+    <tr><td><code>【观点】</code></td><td>真人 + 重点卡</td><td>中间任何一个单独的要点都用它</td><td>2 秒</td></tr>
+    <tr><td><code>【两方面】</code></td><td>真人 + 两项说明</td><td>明确说出两个名字：“一个是……，一个是……”，各配一句说明</td><td>3 秒</td></tr>
+    <tr><td><code>【图表】</code></td><td>深色画布，2–4 根柱子跟着口播升起，人在右下角小圆</td><td>先说“看这张图”，再把几个名字和数字一个一个说出来；数字写进稿子或任务单，AI 只用你给的数字</td><td>6 秒</td></tr>
+    <tr><td><code>【时间线】</code></td><td>深色画布，2–4 个节点从上往下出现</td><td>按时间先后说：“某年……之后，……，于是……”</td><td>4 秒</td></tr>
+    <tr><td><code>【流程对比】</code></td><td>深色画布，红色旧流程绕一圈 → 绿色捷径</td><td>先说旧办法的 3～4 步（或 4 个问题），再用“现在的新办法是……”引出捷径</td><td>6 秒，建议 10～20 秒</td></tr>
+    <tr><td><code>【留白】</code></td><td>只有人和字幕</td><td>很短的过渡句、设问，比如“那下一个十年呢？”</td><td>1 秒</td></tr>
+    <tr><td><code>【总结】</code></td><td>真人 + 收尾卡</td><td>一两句结论、行动建议，或者留给下一期的问题</td><td>3 秒</td></tr>
+  </table></div>
+  <p><b>每段控制在 10～30 秒</b>（大约 40～120 字），因为一张卡停太久会显得单调：1 分钟的稿约 4～6 段，4 分钟的稿约 12～15 段。中间的段可以重复，也可以调换顺序。</p>
+  <h3>写法要求</h3>
+  <ul>
+    <li><b>标点写全</b>：字幕按逗号、句号断行。一句话尽量不超过 15 个字，长句中间加逗号。</li>
+    <li><b>照稿念</b>：字幕文字直接用稿子原文。临场改了很多，就把文稿改成实际念的，再出字幕。</li>
+    <li><b>每段开头一句点题</b>，AI 会从这句提炼卡片标题。</li>
+    <li><b>数字前后一致</b>：念的数字可以取整（“十九万出头”），但要和图上的数字对得上，别说成“二十万”。</li>
+  </ul>
+  <h3>示例（约 50 秒）</h3>
+<pre id="script-tpl"><button class="copy" data-copy="#script-tpl">复制</button><code>【开场·观点】过去十年，同样投 1万美元，买半导体 ETF 变成了 19 万，买纳指 100 只有 6 万多，差了快 3 倍。
+
+【图表】看这张图：SMH，十九万出头；SOXX，十六万多；纳指 100，六万多。为什么半导体能涨这么多？
+
+【观点】我觉得，是因为赶上了移动互联网。2010 年 iPhone 4 发布之后，智能手机普及，腾讯、阿里、京东、美团、头条，一大批公司随之而起。
+
+【两方面】而支撑它们的，是硬件，是半导体。手机性能要越来越强，服务器要越来越多，都离不开芯片。
+
+【总结】那下一个十年呢？AI 会不会把这个故事再讲一遍？</code></pre>
+  <p>这段做出来的样子见<a href="./">在线预览</a>最上面的完整示例。</p>
+</section>
+
+<section id="record">
+  <h2>5. 怎么录</h2>
+  <div class="frame-wrap">
+    <div class="frame" role="img" aria-label="竖屏画面分区示意：上方脸部区，下方卡片区和字幕区">
+      <div class="z-label">章节签</div>
+      <div class="z-face">脸和肩<br>放这里</div>
+      <div class="z-card">磨砂卡<br>会盖住</div>
+      <div class="z-cap">字幕</div>
+    </div>
+    <ul class="legend">
+      <li><b>竖屏 9:16</b>，1080p 或 4K，30 或 60 帧。iPhone 建议在“设置 → 相机 → 录制视频”里关掉 HDR 视频（转视频脚本也会处理，但关掉色彩更稳）。</li>
+      <li><b>拍胸部以上，人居中</b>：头顶离画面上边留一点空，眼睛大约在画面从上往下 1/3 处，下巴不要低于画面一半。</li>
+      <li><b>画面下方约 1/3 会被卡片和字幕盖住</b>：手势放在胸口以上，或者干脆不做；重要的东西别放在下面。</li>
+      <li><b>左上角有章节签</b>，那里别放重要东西。</li>
+      <li><b>人一定要居中</b>：讲图表、流程时，人会被裁成右下角的圆形头像，裁的是画面中间偏上的位置，偏到一边就被切掉了。</li>
+    </ul>
+  </div>
+  <div class="grid2" style="margin-top:18px">
+    <div class="card"><h4>衣服与背景</h4><ul><li>穿深色或中灰的纯色上衣。卡片是浅色磨砂加白字，衣服太白，字会看不清</li><li>不要细条纹、大 logo</li><li>背景别太亮，别正对窗户；有点层次的室内就行，别有大字</li></ul></div>
+    <div class="card"><h4>机位与光</h4><ul><li>三脚架固定，镜头和眼睛平齐，全程不移动、不变焦</li><li>正面柔光，脸比背景亮</li><li>眼睛看镜头</li></ul></div>
+    <div class="card"><h4>声音</h4><ul><li>用领夹麦，或在安静的房间离手机 50 厘米内</li><li>关掉空调、风扇等持续噪音</li></ul></div>
+    <div class="card"><h4>讲法</h4><ul><li>照稿一段一段讲，<b>段和段之间停 1 秒</b>，方便切镜头</li><li>逗号处稍微停一下，字幕断得更自然</li><li>讲到“新办法”那句时说清楚，绿色捷径会在这句出现</li><li><b>开头先停一秒再开口，结尾说完再停一秒</b></li></ul></div>
+    <div class="card"><h4>讲图表时</h4><ul><li><b>先说“看这张图”</b>，画面在这句切到柱状图</li><li><b>名字和数字分开说，中间停半拍</b>：柱子跟着你念到哪个就升起哪一根</li><li>看图那段眼睛照样看镜头，不用往旁边看，手势也看不见</li><li>讲完数字问“为什么……”时<b>看着镜头问</b>：图会缩到上半屏，你出现在下半屏</li></ul></div>
+    <div class="card"><h4>重录与拼接</h4><ul><li>一分钟左右的稿，<b>说砸了就整遍重来</b></li><li>不建议拼接：人物画面在卡片后面一直连续播放，剪掉一段会看到人跳一下</li><li>真要拼，只在图表、流程那几段拼，那时人在小圆框里，几乎看不出</li></ul></div>
+  </div>
+  <div class="note">录完先自己看一眼：脸在上半部、居中，下半部没有关键内容，声音清楚。符合这三点就能套模板。</div>
+</section>
+
+<section id="prepare">
+  <h2>6. 交给 AI 前准备什么</h2>
+  <div class="table-wrap"><table>
+    <tr><th>文件</th><th>要求</th><th></th></tr>
+    <tr><td>视频</td><td>按第 5 节录的竖屏视频，MOV、MP4 都行，放在哪里都可以，给出路径即可</td><td><span class="tag warn">必需</span></td></tr>
+    <tr><td>文稿 .txt</td><td>按第 4 节写，带段落标签，和你实际念的一致</td><td><span class="tag ok">强烈建议</span></td></tr>
+    <tr><td>图表数据</td><td>用 <code>【图表】</code> 时：每根柱子的名字和数字，加上口径（比如“分红再投资，截至 2026.09.30”）。AI 不自己找数据、不自己算</td><td><span class="tag">用图表时必需</span></td></tr>
+    <tr><td>额外要求</td><td>比如“第二段用两方面镜头”“强调词用 XX”“这段用绿色”，写在任务单后面</td><td><span class="tag">可选</span></td></tr>
+  </table></div>
+  <p>没有文稿也能做：AI 会自动转写出字幕，但可能有错字（例如把 SOXX 听成“SAX”），需要你在预览里检查。</p>
+  <p>不需要准备参考视频、截图或代码。</p>
+</section>
+
+<section id="task">
+  <h2>7. 通用任务单</h2>
+  <p>三个工具都用这一份，整段发出即可。装了插件后，AI 听到“磨砂玻璃卡模板”就知道用哪个模板，<b>在任何文件夹里启动工具都能用</b>。</p>
+<pre id="task-text"><button class="copy" data-copy="#task-text">复制</button><code>用磨砂玻璃卡模板做一个口播视频。
+视频：/路径/IMG_xxxx.MOV
+文稿：/路径/文稿.txt
+新项目文件夹：/路径/视频/主题名
+完成后只回复：新项目路径 + Studio 地址。</code></pre>
+  <p>有图表时在后面加一句，例如：</p>
+<pre id="task-chart"><button class="copy" data-copy="#task-chart">复制</button><code>图表数据：SMH 192449、SOXX 165656、纳指 100（QQQ）66776，单位美元；口径：1 万美元十年，分红再投资，截至 2026.09.30。</code></pre>
+  <p>想指定细节也加在最后，例如：<code>第 4 段用时间线；流程段的强调词用“直接改”。</code></p>
+  <h3>不讲话的 Demo</h3>
+<pre id="task-demo"><button class="copy" data-copy="#task-demo">复制</button><code>用磨砂玻璃卡模板做一个静音 Demo，不用出字幕。
+视频：/路径/IMG_xxxx.MOV
+新项目文件夹：/路径/视频/主题名
+镜头（用 seconds 写法，每个镜头写 caption）：
+1. glass 6秒｜标签 01 / 核心思路｜眉题 NEXT · 接下来讲讲｜标题 第一行\n第二行[强调词]｜字幕 ……
+2. twoShots 6秒｜……
+3. canvas 10秒｜……
+4. outro 6秒｜……
+完成后只回复：新项目路径 + Studio 地址。</code></pre>
+</section>
+
+<!-- ============ Claude ============ -->
+<section id="claude" class="model" style="--m:var(--claude)">
+  <span class="badge">CLAUDE CODE</span>
+  <h2>8. 用 Claude Code 操作</h2>
+  <div class="mtoc"><b>本节目录</b><ol>
+    <li><a href="#claude-model">选模型</a></li><li><a href="#claude-open">打开方式</a></li><li><a href="#claude-prompt">提示词</a></li><li><a href="#claude-check">验收</a></li><li><a href="#claude-save">省 token</a></li></ol></div>
+
+  <h3 id="claude-model">8.1 选模型</h3>
+  <div class="table-wrap"><table>
+    <tr><th>任务</th><th>模型</th></tr>
+    <tr><td>套稿：视频 + 文稿 → 预览（日常）</td><td><b>Sonnet 5.5</b></td></tr>
+    <tr><td>只改几个字、换个强调词</td><td><b>Haiku 5.5</b>，或者自己改 content.ts</td></tr>
+    <tr><td>改样式、加新镜头类型</td><td>Opus 5.5</td></tr>
+  </table></div>
+  <p>桌面 App 在输入框的模型菜单里切换；终端里输入 <code>/model</code> 选择。</p>
+
+  <h3 id="claude-open">8.2 打开方式</h3>
+  <p>装好插件后，在哪个文件夹启动都行，比如你放视频的文件夹。</p>
+<pre id="claude-cmd"><button class="copy" data-copy="#claude-cmd">复制</button><code>cd ~/视频 &amp;&amp; claude</code></pre>
+  <p>用桌面 App 时，新建会话并选择一个文件夹。</p>
+
+  <h3 id="claude-prompt">8.3 提示词</h3>
+  <p>直接发第 7 节的任务单，不用加别的。</p>
+
+  <h3 id="claude-check">8.4 验收</h3>
+  <ul><li>它回复了新项目路径和 Studio 地址</li><li>从头播一遍：镜头在该换的时候换，字幕和说话对得上</li><li>柱子跟着你念的名字一根根升起，数字和你给的一致</li><li>卡片标题通顺，强调词是重点，卡片不挡脸</li><li>满意后自己渲染（第 13 节）</li></ul>
+
+  <h3 id="claude-save">8.5 省 token</h3>
+  <ul><li>文稿和图表数据给全，让它一次完成，别分几轮补</li><li>改几个字时，自己打开 <code>content.ts</code> 改最省，Studio 会自动刷新</li><li>不要让它截图看效果，你自己在浏览器看</li><li>一个视频一个会话</li></ul>
+</section>
+
+<!-- ============ Codex ============ -->
+<section id="codex" class="model" style="--m:var(--codex)">
+  <span class="badge">OPENAI CODEX</span>
+  <h2>9. 用 Codex 操作</h2>
+  <div class="mtoc"><b>本节目录</b><ol>
+    <li><a href="#codex-model">选模型</a></li><li><a href="#codex-open">打开方式</a></li><li><a href="#codex-prompt">提示词</a></li><li><a href="#codex-check">验收</a></li><li><a href="#codex-save">省 token</a></li></ol></div>
+
+  <h3 id="codex-model">9.1 选模型</h3>
+  <div class="table-wrap"><table>
+    <tr><th>任务</th><th>选择</th></tr>
+    <tr><td>套稿（日常）</td><td>中档模型，推理强度 <b>低或中</b></td></tr>
+    <tr><td>改样式、加新镜头类型</td><td>最高档模型，推理强度高</td></tr>
+  </table></div>
+  <p>在 Codex 里输入 <code>/model</code> 切换模型和推理强度。套稿就是按模板卡填空，推理强度越低越省。</p>
+
+  <h3 id="codex-open">9.2 打开方式</h3>
+  <p>装好插件后，在哪个文件夹启动都行。</p>
+<pre id="codex-cmd"><button class="copy" data-copy="#codex-cmd">复制</button><code>cd ~/视频 &amp;&amp; codex</code></pre>
+  <div class="note warn">Codex 的沙箱可能拦截三件事：写新项目文件夹、读取本机语音模型（出字幕要用）、启动本地服务（之前出现过“端口被占用”的假报错）。遇到时给它对应权限，或者让它停下，由你自己在终端运行那条命令。</div>
+
+  <h3 id="codex-prompt">9.3 提示词</h3>
+  <p>发第 7 节的任务单，并在末尾加一句：</p>
+<pre id="codex-extra"><button class="copy" data-copy="#codex-extra">复制</button><code>如果沙箱拦截了出字幕或启动 Studio，不要反复重试，直接告诉我要运行的命令，我自己运行。</code></pre>
+
+  <h3 id="codex-check">9.4 验收</h3>
+  <ul><li>它回复了新项目路径；Studio 地址由它或你自己启动后得到</li><li>从头播一遍：镜头切换和字幕对得上说话</li><li>卡片标题通顺，强调词是重点，卡片不挡脸</li><li>满意后自己渲染（第 13 节）</li></ul>
+
+  <h3 id="codex-save">9.5 省 token</h3>
+  <ul><li>不要让它打开浏览器检查画面，浏览器返回的内容很长，最费 token</li><li>报错时只让它看 “content.ts 需要修改” 那一行</li><li>一个视频一个会话</li></ul>
+</section>
+
+<!-- ============ Gemini ============ -->
+<section id="gemini" class="model" style="--m:var(--gemini)">
+  <span class="badge">GEMINI CLI · ANTIGRAVITY</span>
+  <h2>10. 用 Gemini CLI 等其他工具操作</h2>
+  <div class="mtoc"><b>本节目录</b><ol>
+    <li><a href="#gemini-model">选模型</a></li><li><a href="#gemini-open">打开方式</a></li><li><a href="#gemini-prompt">提示词</a></li><li><a href="#gemini-check">验收</a></li><li><a href="#gemini-save">省 token</a></li></ol></div>
+
+  <h3 id="gemini-model">10.1 选模型</h3>
+  <div class="table-wrap"><table>
+    <tr><th>任务</th><th>选择</th></tr>
+    <tr><td>套稿（日常）</td><td><b>Flash 档</b></td></tr>
+    <tr><td>改样式、加新镜头类型</td><td>Pro 档</td></tr>
+  </table></div>
+  <p>在 Gemini CLI 里输入 <code>/model</code> 切换。</p>
+
+  <h3 id="gemini-open">10.2 打开方式</h3>
+  <p>这些工具没有插件，要在<b>下载好的仓库文件夹</b>里启动（第 3 节），它会读取 <code>GEMINI.md</code>，从而读到 <code>AGENTS.md</code>。</p>
+<pre id="gemini-cmd"><button class="copy" data-copy="#gemini-cmd">复制</button><code>cd ~/Projects/video-kit &amp;&amp; gemini</code></pre>
+  <p>启动后输入 <code>/memory show</code>，能看到 AGENTS.md 的内容就说明规则已加载。看不到时，在任务单开头加一句“先读 AGENTS.md”。Antigravity 打开这个文件夹即可。</p>
+
+  <h3 id="gemini-prompt">10.3 提示词</h3>
+  <p>发第 7 节的任务单，并在末尾加一句：</p>
+<pre id="gemini-extra"><button class="copy" data-copy="#gemini-extra">复制</button><code>npm run studio 要放到后台运行，不要等它结束。不要读 src/video.tsx。新项目建在我给的文件夹，不要改这个仓库里的文件。</code></pre>
+
+  <h3 id="gemini-check">10.4 验收</h3>
+  <ul><li>它回复了新项目路径和 Studio 地址</li><li>从头播一遍：镜头切换和字幕对得上说话</li><li>卡片标题通顺，强调词是重点，卡片不挡脸</li><li>满意后自己渲染（第 13 节）</li></ul>
+
+  <h3 id="gemini-save">10.5 省 token</h3>
+  <ul><li>这类工具爱先浏览整个文件夹，规则里已禁止读 video.tsx；发现它在读就打断提醒</li><li>一个视频一个会话</li></ul>
+</section>
+
+<section id="scenes">
+  <h2>11. 七种镜头与颜色</h2>
+  <p>AI 按 <code>TEMPLATE.md</code> 自动选择和填写，这里供你看懂 <code>content.ts</code>、自己微调时参考。每种镜头的样子见<a href="./">在线预览</a>。</p>
+  <div class="table-wrap"><table>
+    <tr><th>type</th><th>画面</th><th>对应稿子</th><th>最短</th></tr>
+    <tr><td><code>glass</code></td><td>真人 + 磨砂重点卡（眉题 + 1～2 行标题）</td><td>开场、观点</td><td>2 秒</td></tr>
+    <tr><td><code>twoShots</code></td><td>真人 + 磨砂卡 + 两项图标说明，两项可以晚一点出现</td><td>两方面</td><td>3 秒</td></tr>
+    <tr><td><code>chart</code></td><td>深色画布：2–4 根柱子跟着口播升起，金额滚动，最高和最低之间标出倍数；讲完可缩到上半屏，人回到下半屏</td><td>图表</td><td>6 秒</td></tr>
+    <tr><td><code>timeline</code></td><td>深色画布：2–4 个节点从上往下依次出现，竖线连起来</td><td>时间线</td><td>4 秒</td></tr>
+    <tr><td><code>canvas</code></td><td>深色画布：红色旧流程 4 个节点绕一圈 → 绿色捷径</td><td>流程对比</td><td>6 秒</td></tr>
+    <tr><td><code>clean</code></td><td>只有人和字幕，不加任何卡片</td><td>留白</td><td>1 秒</td></tr>
+    <tr><td><code>outro</code></td><td>真人 + 收尾卡（标题下有一条线）</td><td>总结</td><td>3 秒</td></tr>
+  </table></div>
+  <h3>颜色有固定含义</h3>
+  <p>标题里用 <code>[方括号]</code> 包住的字显示为强调色。镜头写 <code>tone</code> 换颜色，拿不准就不写：</p>
+  <ul>
+    <li><b style="color:#c9952f">黄（默认，不写 tone）</b>：强调</li>
+    <li><b style="color:#2f9d5f">绿（tone: 'green'）</b>：新观点、结论</li>
+    <li><b style="color:#d4584c">红（tone: 'red'）</b>：旧观点、风险</li>
+  </ul>
+  <h3>自己微调时常改的地方</h3>
+  <div class="table-wrap"><table>
+    <tr><th>想改</th><th>改 content.ts 里的</th></tr>
+    <tr><td>卡片文字、强调词</td><td>各镜头的 <code>title</code>，强调用 <code>[方括号]</code>，换行用 <code>\n</code></td></tr>
+    <tr><td>强调色</td><td>该镜头的 <code>tone</code>：<code>'green'</code> 或 <code>'red'</code>，删掉就是黄色</td></tr>
+    <tr><td>某个镜头早点或晚点出现</td><td>该镜头的 <code>at</code>（视频第几秒）</td></tr>
+    <tr><td>柱子升起、倍数标注、图缩上去的时间</td><td>chart 里每根柱子的 <code>at</code>、<code>gap.at</code>、<code>shrinkAt</code></td></tr>
+    <tr><td>时间线节点出现的时间</td><td>timeline 里每个节点的 <code>at</code></td></tr>
+    <tr><td>两项说明出现的时间</td><td>twoShots 的 <code>itemsAt</code></td></tr>
+    <tr><td>绿色捷径出现的时间</td><td>canvas 的 <code>shortcutAt</code></td></tr>
+    <tr><td>字幕错字</td><td>改新项目里的 <code>public/subtitles.srt</code></td></tr>
+    <tr><td>卡片挡脸</td><td><code>layout.cardShift</code> 填负数，如 <code>-80</code></td></tr>
+    <tr><td>圆形头像里脸的位置</td><td><code>layout.pipTop</code>：脸偏下就填更小的负数</td></tr>
+    <tr><td>图缩上去后，下半屏人的位置</td><td><code>layout.halfTop</code>：脸偏下就填更小的负数</td></tr>
+    <tr><td>静音 / 原声</td><td><code>audio</code></td></tr>
+  </table></div>
+  <div class="note">填错时，Studio 会直接显示“content.ts 需要修改：第 3 个镜头（chart）：时长 4.0 秒，至少要 6 秒……”，按提示改就行。</div>
+</section>
+
+<section id="files">
+  <h2>12. 模板文件</h2>
+  <p>模板在仓库的 <code>plugins/video-kit/skills/glass-talking-video/</code> 里。每个视频会复制出一个新项目，只在新项目里改。</p>
+  <div class="table-wrap"><table>
+    <tr><th>文件</th><th>作用</th></tr>
+    <tr><td><code>SKILL.md</code></td><td>AI 的操作步骤和禁止事项</td></tr>
+    <tr><td><code>TEMPLATE.md</code></td><td>模板卡：AI 套稿时唯一要读的规则（也会复制进新项目）</td></tr>
+    <tr><td><code>examples/</code></td><td>完整示例：半导体引子的文稿、字幕和 content.ts</td></tr>
+    <tr><td><code>template/src/content.ts</code></td><td>每个视频唯一要改的文件</td></tr>
+    <tr><td><code>template/src/video.tsx</code>、<code>index.tsx</code></td><td>样式、动效、时间计算，换内容时不改</td></tr>
+    <tr><td><code>template/scripts/setup.sh</code></td><td>第一次使用：装 Remotion 依赖到共享文件夹，检查 ffmpeg 和 WhisperX</td></tr>
+    <tr><td><code>template/scripts/new-video.sh</code></td><td>从模板复制出新项目</td></tr>
+    <tr><td><code>template/scripts/prepare-video.sh</code></td><td>转视频：H.264、30fps、保留原声、HDR 转普通</td></tr>
+    <tr><td><code>template/scripts/make-subtitles.sh</code></td><td>出逐句字幕：有文稿用原文对时间，没有就自动转写；默认只用本机已有的模型，加 <code>--download</code> 才下载</td></tr>
+    <tr><td><code>plugins/video-kit/sfx/</code></td><td>22 个音效，用代码合成，没有版权问题；在线预览里可以试听</td></tr>
+  </table></div>
+</section>
+
+<section id="render">
+  <h2>13. 自己渲染</h2>
+  <p>在 Studio 右下角点 <b>Render</b>；或者在新项目文件夹里运行：</p>
+<pre id="render-cmd"><button class="copy" data-copy="#render-cmd">复制</button><code>npx remotion render src/index.tsx V2-Glass-and-Canvas out/成片.mp4</code></pre>
+  <p>同名文件会被覆盖，旧成片想保留就换个名字。</p>
+  <div class="note">Remotion 的授权：个人和 3 人以内的公司免费，更大的公司需要购买 Remotion 授权。</div>
+</section>
+
+<section id="faq">
+  <h2>14. 常见问题</h2>
+  <div class="table-wrap"><table>
+    <tr><th>现象</th><th>处理</th></tr>
+    <tr><td>字幕和说话对不上</td><td>念的和文稿差得多。把文稿改成实际念的内容，重新出字幕；或者不给文稿让它自动转写，再改错字</td></tr>
+    <tr><td>报“本机没有中文对齐模型”</td><td>第一次出字幕要下载模型，同意后让 AI 加 <code>--download</code> 再跑</td></tr>
+    <tr><td>报“视频里没有声音”</td><td>换成带原声的视频；静音视频只能做 Demo，或者自己提供 SRT 字幕</td></tr>
+    <tr><td>报“还没装依赖”或找不到 remotion</td><td>运行一次 <code>template/scripts/setup.sh</code></td></tr>
+    <tr><td>镜头切得太早或太晚</td><td>改该镜头的 <code>at</code></td></tr>
+    <tr><td>柱子升起得和说话对不上</td><td>改每根柱子的 <code>at</code>，填念到它那句字幕的开始秒数</td></tr>
+    <tr><td>Studio 里只剩背景、没有人</td><td>浏览器按 <b>Cmd+Shift+R</b> 强制刷新</td></tr>
+    <tr><td>MOV 预览卡住或报解码超时</td><td>先用 <code>scripts/prepare-video.sh</code> 转成 mp4</td></tr>
+    <tr><td>同时开了两个项目</td><td>第二个 Studio 自动用 3001 端口，以终端显示的地址为准</td></tr>
+    <tr><td>两方面不止两项、流程不止四步、柱子超过 4 根</td><td>目前固定为 2 项、4 个节点、2–4 根柱子，AI 会合并或精简。经常不够用时再改样式，用高档模型</td></tr>
+    <tr><td>想改配色、卡片形状、动效</td><td>不属于换内容，换高档模型，并明确允许它改 <code>src/video.tsx</code></td></tr>
+  </table></div>
+</section>
+</main>
+</div>
+<script>
+document.querySelectorAll('button.copy').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var el=document.querySelector(btn.dataset.copy);
+    var target=el.querySelector('code')||el;
+    var text=target.innerText.trim();
+    var done=function(){var t=btn.textContent;btn.textContent='已复制';setTimeout(function(){btn.textContent=t},1200)};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,fallback)}else{fallback()}
+    function fallback(){var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(ta)}
+  });
+});
+</script>
+</body>
+</html>
