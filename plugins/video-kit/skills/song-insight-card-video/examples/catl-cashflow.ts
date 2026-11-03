@@ -1,0 +1,110 @@
+import type {VideoContent} from './types';
+
+// 示例：宁德时代 Q3 现金流（2026-10-22 第一支）。新视频整份替换这里的内容
+export const content: VideoContent = {
+  id: 'CATL-Cashflow',
+  bgm: 'bgm.mp3',
+  pages: [
+    {
+      type: 'cover',
+      seconds: 4,
+      eyebrow: 'CASH FLOW INSIGHT',
+      title: '宁王现金流之谜',
+      subtitle: '不止是少赚了钱这么简单',
+      illustration: 'battery',
+      lead: '你以为Q3自由现金流转负是暴雷？',
+      body: '单季营收暴涨58%，自由现金流却倒贴157亿\n它其实是主动输血上游、备货扩张与占款红利见顶的共振',
+      cta: '往下滑，看看钱到底去哪了',
+    },
+    {
+      type: 'hero',
+      seconds: 5,
+      eyebrow: '01 / DATA SNAPSHOT',
+      title: '账面利润 VS 真实回款\nQ3到底有多分裂？',
+      stats: [
+        {label: 'Q3 营业收入', value: '1,652亿', note: '同比 +58.6%'},
+        {label: 'Q3 归母净利', value: '212.5亿', note: '同比 +14.5%'},
+        {label: 'Q3 经营现金流', value: '14.1亿', note: '同比 -94%'},
+      ],
+      hero: {
+        label: 'Q3 自由现金流',
+        sublabel: '(FCF)',
+        value: -156.9,
+        decimals: 1,
+        unit: '亿',
+        stamp: '转负！',
+        formula: ['经营现金流 14.1亿', '−', '资本开支 171亿', '=', '倒贴 157亿'],
+      },
+      point: {
+        badge: '!',
+        title: '反差核心：赚了利润，没收进现金',
+        body: '上半年经营现金流高达 **602亿**，Q3单季却骤降至 **14.1亿**。212亿账面利润几乎全部沉淀在上下游营运资金里。',
+      },
+      footer: '营收 +58%，自由现金流却倒贴157亿',
+    },
+    {
+      type: 'causes',
+      seconds: 6,
+      eyebrow: '02 / ROOT CAUSES',
+      title: '现金去哪了？两头一挤，钱就没了',
+      focus: [
+        {
+          tone: 'accent',
+          tag: '01 / 付钱',
+          title: '上游：占款少了',
+          from: '宁德时代',
+          to: '上游供应商',
+          flowLabel: '钱付出去更早',
+          speed: 'fast',
+          stat: {label: '预付款', value: 265, unit: '亿', delta: '+85%'},
+          side: {label: '应付账款', value: '仅 +12.5%'},
+          stamp: '不再压账期',
+          body: '上游材料厂濒临亏损，宁德主动缩短账期扶持保供，**不再白用供应商的钱**。',
+        },
+        {
+          tone: 'accent2',
+          tag: '02 / 收钱',
+          title: '下游：回款慢了',
+          from: '下游车企',
+          to: '宁德时代',
+          flowLabel: '钱回来更晚',
+          speed: 'slow',
+          stat: {label: '应收账款', value: 1129, unit: '亿', delta: '+48%'},
+          side: {label: '合同负债', value: '反降 17%'},
+          stamp: '账期被拉长',
+          body: '车企价格战压力传导，应收净增365亿，**销售收现跑输营收**。',
+        },
+      ],
+      extras: [
+        {title: '内部存货：扩产与海外在途占压502亿', body: '期末**存货暴增53%至1,448亿**，较年初净占用超500亿现金。'},
+        {title: '刚性支出：171亿扩产 + 电池消费税开征', body: 'Q3资本开支**猛增73%至171亿**；9月起电池消费税开征，税费激增271%。'},
+      ],
+      footer: '上游少占、下游慢回，再叠加存货与扩产，缺口157亿',
+    },
+    {
+      type: 'points',
+      seconds: 4,
+      eyebrow: '03 / FINAL VERDICT',
+      title: '是基本面真崩塌\n还是短期错配洗牌？',
+      items: [
+        {
+          badge: '✓',
+          title: '并非财务造假或资金链危机',
+          body: '账面仍手握**1,840亿净现金**。预付款与存货高企属于产业扩张期的可逆占款，随后续交付结转具备均值回归基础。',
+        },
+        {
+          badge: '!',
+          title: '机构真正恐惧的：类金融占款红利见顶',
+          highlighted: true,
+          body: '过去靠“极致压上游账期+收下游预付款”躺赚超额现金流（净现比常年>1.3倍）；如今不得不反哺上游、让渡下游账期，**商业模式溢价正在弱化**。',
+        },
+        {
+          badge: '→',
+          title: 'Q4年报两大核心验证锚点',
+          body: '① **预付款/应付款比值**是否企稳（验证上游输血是否结束）；\n② **单季销售收现比**能否重回95%~100%健康水位。',
+        },
+      ],
+      footer: '底盘依旧稳固，但估值逻辑正经历重塑',
+    },
+  ],
+};

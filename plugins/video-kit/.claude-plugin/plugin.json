@@ -3,10 +3,21 @@
   "name": "video-kit",
   "displayName": "video-kit",
   "version": "2.1.0",
-  "description": "把竖屏口播视频套进磨砂玻璃卡模板：真人 + 玻璃卡，数据和过程切到深色画布，逐句字幕。只填内容，不改组件，不渲染。",
-  "author": {"name": "songxiaofeng1981", "url": "https://github.com/songxiaofeng1981"},
+  "description": "宋的视频模板库（Remotion）：磨砂玻璃卡口播、洞察卡片动画、财经口播动效。只填内容，不改组件，不渲染。",
+  "author": {
+    "name": "songxiaofeng1981",
+    "url": "https://github.com/songxiaofeng1981"
+  },
   "homepage": "https://songxiaofeng1981.github.io/video-kit/",
   "repository": "https://github.com/songxiaofeng1981/video-kit",
   "license": "SEE LICENSE IN LICENSE",
-  "keywords": ["remotion", "video", "talking-head", "口播", "glassmorphism"]
+  "keywords": [
+    "remotion",
+    "video",
+    "talking-head",
+    "口播",
+    "glassmorphism",
+    "insight-card",
+    "finance"
+  ]
 }

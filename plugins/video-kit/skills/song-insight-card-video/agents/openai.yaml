@@ -1,0 +1,5 @@
+interface:
+  display_name: "宋的洞察卡片视频"
+  short_description: "HTML 图文卡片 → 竖屏动画：一个主角数字 + 两个直接原因，其余压缩"
+  brand_color: "#7B52AB"
+  default_prompt: "使用 $song-insight-card-video 把这个 HTML 做成视频。主角：<数字>；原因：<A>、<B>。不要渲染。"

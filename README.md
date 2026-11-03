@@ -53,7 +53,9 @@ AI 会：建项目 → 转视频 → 按文稿对齐字幕 → 按 `TEMPLATE.md`
 
 | 位置 | 内容 |
 |---|---|
-| `plugins/video-kit/skills/glass-talking-video/` | 模板 skill：`SKILL.md`（步骤）、`TEMPLATE.md`（一页规则卡）、`template/`（代码和脚本）、`examples/`（完整示例） |
+| `plugins/video-kit/skills/glass-talking-video/` | 磨砂玻璃卡口播模板：`SKILL.md`（步骤）、`TEMPLATE.md`（一页规则卡）、`template/`（代码和脚本）、`examples/`（完整示例） |
+| `plugins/video-kit/skills/song-insight-card-video/` | 洞察卡视频模板：HTML 图文卡片 → 3:4 竖屏动画（一个主角数字 + 两个原因），`examples/` 里是做过的视频 |
+| `plugins/video-kit/skills/song-finance-video-template/` | 宋的财经模板：给已有口播视频加 5 种固定财经动效 |
 | `plugins/video-kit/sfx/` | 22 个音效，用代码合成，没有版权问题 |
 | `docs/` | 在线预览页（GitHub Pages） |
 | `gallery/` | 预览页源码；改了模板后运行 `gallery/build.sh` 重新生成 |
